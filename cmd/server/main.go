@@ -2,11 +2,15 @@ package main
 
 import (
 	"log"
-	"shopapi/internal/delivery/http"
+	http "shopapi/internal/delivery/http"
+	"shopapi/internal/usecase"
 )
 
 func main() {
-	r := http.NewRouter()
+	// Пока репозиторий nil — добавим позже
+	clientUC := usecase.NewClientUseCase(nil)
+
+	r := http.NewRouter(clientUC)
 
 	if err := r.Run(":8080"); err != nil {
 		log.Fatal(err)

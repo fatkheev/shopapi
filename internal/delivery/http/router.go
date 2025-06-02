@@ -1,15 +1,16 @@
 package http
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"shopapi/internal/usecase"
+)
 
-func NewRouter() *gin.Engine {
+func NewRouter(clientUC *usecase.ClientUseCase) *gin.Engine {
 	r := gin.Default()
 
-	v1 := r.Group("api/v1")
+	v1 := r.Group("/api/v1")
 	{
-		v1.GET("/clients", func(c *gin.Context) {
-			c.JSON(501, gin.H{"message": "not implemented"})
-		})
+		NewClientHandler(v1, clientUC)
 	}
 
 	return r

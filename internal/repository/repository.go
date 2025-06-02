@@ -1,9 +1,10 @@
 package repository
 
-import "github.com/google/uuid"
-import "shopapi/internal/domain"
+import (
+	"shopapi/internal/domain"
+	"github.com/google/uuid"
+)
 
-// Интерфейс для работы с клиентами.
 type ClientRepository interface {
 	Create(client domain.Client) error
 	Delete(id uuid.UUID) error
