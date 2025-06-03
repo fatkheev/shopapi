@@ -1,18 +1,17 @@
 package main
 
 import (
-	"log"
-	http "shopapi/internal/delivery/http"
-	"shopapi/internal/usecase"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	// Пока репозиторий nil — добавим позже
-	clientUC := usecase.NewClientUseCase(nil)
+	router := gin.Default()
 
-	r := http.NewRouter(clientUC)
+	router.GET("/ping", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"message":"pong"})
+	})
 
-	if err := r.Run(":8080"); err != nil {
-		log.Fatal(err)
-	}
+	router.Run(":8080")
 }
