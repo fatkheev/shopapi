@@ -2,31 +2,21 @@ package service
 
 import (
 	"shopapi/internal/model"
-	"time"
-
-	"github.com/google/uuid"
+	"shopapi/internal/repository"
 )
 
 type ClientService interface {
 	GetAllClients() []model.Client
 }
 
-type clientService struct {}
+type clientService struct {
+	repo repository.ClientRepository
+}
 
-func NewClientService() ClientService {
-	return &clientService{}
+func NewClientService(repo repository.ClientRepository) ClientService {
+	return &clientService{repo: repo}
 }
 
 func (s *clientService) GetAllClients() []model.Client {
-	client := model.Client{
-		ID:               uuid.New(),
-		Name:             "Иван",
-		Surname:          "Иванов",
-		Birthday:         time.Date(1990, 5, 12, 0, 0, 0, 0, time.UTC),
-		Gender:           "male",
-		RegistrationDate: time.Now(),
-		AddressID:        uuid.New(),
-	}
-
-	return []model.Client{client}
+	return s.repo.GetAll()
 }

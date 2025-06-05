@@ -24,3 +24,4 @@ type ClientResponseDTO struct {
 	Gender           string `json:"gender,omitempty"`
 	RegistrationDate string `json:"registration_date,omitempty"`
 }
+
