@@ -58,6 +58,32 @@ create index if not exists idx_product_supplier_id on product (supplier_id);
 create index if not exists idx_product_category on product (category);
 create index if not exists idx_product_available_stock on product (available_stock);
 
+-- ===== Тестовые данные =====
+
+-- адреса
+insert into address (country, city, street)
+values
+  ('Россия', 'Казань', 'Баумана, 1'),
+  ('Россия', 'Москва', 'Тверская, 5');
+
+-- клиенты
+insert into client (client_name, client_surname, birthday, gender, address_id)
+select 'Анна', 'Иванова', '1995-03-10', 1, id from address where city = 'Казань' limit 1;
+
+insert into client (client_name, client_surname, birthday, gender, address_id)
+select 'Иван', 'Петров', '1988-07-22', 2, id from address where city = 'Москва' limit 1;
+
+-- поставщики
+insert into supplier (name, address_id, phone_number)
+select 'Техника-Маркет', id, '+7 (999) 123-45-67' from address where city = 'Москва' limit 1;
+
+-- товары
+insert into product (name, category, price, available_stock, last_update_date, supplier_id)
+select 'Пылесос SuperClean 3000', 'Пылесосы', 12990.00, 15, current_date, id from supplier where name = 'Техника-Маркет' limit 1;
+
+insert into product (name, category, price, available_stock, last_update_date, supplier_id)
+select 'Холодильник Frosty XXL', 'Холодильники', 49990.00, 7, current_date, id from supplier where name = 'Техника-Маркет' limit 1;
+
 -- +goose Down
 drop table if exists product;
 drop table if exists images;
